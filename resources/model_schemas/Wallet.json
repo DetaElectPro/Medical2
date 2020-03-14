@@ -1,0 +1,66 @@
+[
+  {
+    "name": "id",
+    "dbType": "bigIncrements",
+    "htmlType": "",
+    "validations": "",
+    "searchable": false,
+    "fillable": false,
+    "primary": true,
+    "inForm": false,
+    "inIndex": false,
+    "inView": true
+  },
+  {
+    "name": "balance",
+    "dbType": "string",
+    "htmlType": "text",
+    "validations": "required|max:5|min:1",
+    "searchable": true,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "user_id",
+    "dbType": "bigInteger:unsigned:foreign,users,id,text",
+    "htmlType": "",
+    "validations": "",
+    "searchable": true,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "created_at",
+    "dbType": "timestamp",
+    "htmlType": "",
+    "validations": "",
+    "searchable": false,
+    "fillable": false,
+    "primary": false,
+    "inForm": false,
+    "inIndex": false,
+    "inView": true
+  },
+  {
+    "name": "updated_at",
+    "dbType": "timestamp",
+    "htmlType": "",
+    "validations": "",
+    "searchable": false,
+    "fillable": false,
+    "primary": false,
+    "inForm": false,
+    "inIndex": false,
+    "inView": true
+  },
+  {
+    "type": "relation",
+    "relation": "mt1,users,employ_id,id"
+  }
+]

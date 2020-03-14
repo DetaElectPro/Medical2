@@ -1,0 +1,194 @@
+[
+  {
+    "name": "id",
+    "dbType": "bigincrements",
+    "htmlType": "",
+    "validations": "",
+    "searchable": false,
+    "fillable": false,
+    "primary": true,
+    "inForm": false,
+    "inIndex": false,
+    "inView": false
+  },
+  {
+    "name": "name",
+    "dbType": "string",
+    "htmlType": "text",
+    "validations": "required",
+    "searchable": true,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "address",
+    "dbType": "string",
+    "htmlType": "text",
+    "validations": "",
+    "searchable": true,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "start_time",
+    "dbType": "date",
+    "htmlType": "date",
+    "validations": "",
+    "searchable": true,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "end_time",
+    "dbType": "date",
+    "htmlType": "date",
+    "validations": "",
+    "searchable": true,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "number_of_hour",
+    "dbType": "number",
+    "htmlType": "number",
+    "validations": "",
+    "searchable": true,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "price",
+    "dbType": "double",
+    "htmlType": "text",
+    "validations": "",
+    "searchable": false,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "ststus",
+    "dbType": "integer",
+    "htmlType": "text",
+    "validations": "",
+    "searchable": false,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "longitude",
+    "dbType": "double",
+    "htmlType": "text",
+    "validations": "",
+    "searchable": false,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "latitude",
+    "dbType": "double",
+    "htmlType": "text",
+    "validations": "",
+    "searchable": true,
+    "fillable": false,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "user_id",
+    "dbType": "biginteger:unsigned:foreign,users,id",
+    "htmlType": "text",
+    "validations": "",
+    "searchable": false,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "doctor_id",
+    "dbType": "biginteger:unsigned:foreign,users,id",
+    "htmlType": "text",
+    "validations": "",
+    "searchable": false,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "medical_id",
+    "dbType": "biginteger:unsigned:foreign,medical_specialtys,id",
+    "htmlType": "text",
+    "validations": "",
+    "searchable": false,
+    "fillable": true,
+    "primary": false,
+    "inForm": true,
+    "inIndex": true,
+    "inView": true
+  },
+  {
+    "name": "created_at",
+    "dbType": "timestamp",
+    "htmlType": "",
+    "validations": "",
+    "searchable": false,
+    "fillable": false,
+    "primary": false,
+    "inForm": false,
+    "inIndex": false,
+    "inView": true
+  },
+  {
+    "name": "updated_at",
+    "dbType": "timestamp",
+    "htmlType": "",
+    "validations": "",
+    "searchable": false,
+    "fillable": false,
+    "primary": false,
+    "inForm": false,
+    "inIndex": false,
+    "inView": true
+  },
+  {
+    "type": "relation",
+    "relation": "mt1,users,user_id,id"
+  },
+  {
+    "type": "relation",
+    "relation": "mt1,users,doctor_id,id"
+  },
+  {
+    "type": "relation",
+    "relation": "mt1,medical_specialtys,medical_id,id"
+  }
+]
