@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\AcceptRequestSpecialists;
+use App\Models\EmergencyServiced;
 use App\Models\Employ;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,7 +65,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'password', 'created_at', 'image'
+        'name', 'email', 'phone', 'password', 'created_at', 'image', 'role'
     ];
 
     /**
@@ -116,6 +117,11 @@ class User extends Authenticatable implements JWTSubject
     public function employ()
     {
         return $this->hasOne(Employ::class);
+    }
+
+    public function emergency()
+    {
+        return $this->hasMany(EmergencyServiced::class, 'user_id');
     }
 
     public function acceptRequest()

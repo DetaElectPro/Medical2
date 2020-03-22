@@ -44,3 +44,6 @@ Route::get('acceptRequestByUser/{id}', 'AcceptRequestSpecialistsAPIController@ac
 Route::get('cancelRequestByAdmin/{id}', 'AcceptRequestSpecialistsAPIController@cancelRequestByAdmin');
 Route::get('cancelRequestByUser/{id}', 'AcceptRequestSpecialistsAPIController@cancelRequestByUser');
 Route::post('acceptRequestAndDone/{id}', 'AcceptRequestSpecialistsAPIController@acceptRequestAndDone');
+
+Route::resource('emergency_serviced', 'EmergencyServicedAPIController');
+Route::get('emergency_serviced_admin_history', 'EmergencyServicedAPIController@adminHistory');

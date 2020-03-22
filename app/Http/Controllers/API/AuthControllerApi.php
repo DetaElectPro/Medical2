@@ -93,9 +93,9 @@ class AuthControllerApi extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public
-    function register(Request $request)
+    public function register(Request $request)
     {
+
         $status = 1;
         $validator = Validator::make($request->all(), [
             'email' => 'email|unique:users',

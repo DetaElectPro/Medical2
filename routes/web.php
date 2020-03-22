@@ -37,3 +37,5 @@ Route::resource('requestSpecialists', 'RequestSpecialistsController');
 Route::resource('wallets', 'WalletController');
 
 Route::resource('profile', 'UserInfoController');
+
+Route::resource('emergencyServiceds', 'EmergencyServicedController');

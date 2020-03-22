@@ -220,7 +220,7 @@ class AcceptRequestSpecialists extends Model
     {
         $acceptRequest = AcceptRequestSpecialists::whereRequestId($requestId)
             ->update([
-                'notes' => $request->notes,
+                'note' => $request->note,
                 'recommendation' => $request->recommendation,
                 'rating' => $request->rating
             ]);
