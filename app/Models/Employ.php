@@ -23,17 +23,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer user_id
  * @property integer medical_fields_id
  * @property int $id
- * @property \Illuminate\Support\Carbon $registration_date
- * @property string $address
- * @property int $years_of_experience
- * @property string $cv
- * @property int $user_id
  * @property int $medical_field_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\User $doctor
- * @property-read \App\Models\MedicalField $medicalField
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Employ newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Employ newQuery()

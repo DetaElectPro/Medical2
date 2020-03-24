@@ -79,8 +79,7 @@ class UserInfoController extends Controller
         $employ->cv = $cvFile;
         $employ->doctor()->update(['status' => 3]);
         $employ->save();
-        return $employ->doctor;
-//        return view('web.employ.index');
+        return view('web.employ.index');
     }
 
     /**
