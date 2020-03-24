@@ -123,6 +123,22 @@ abstract class BaseRepository
     }
 
     /**
+     * @param $where
+     * @param $condition
+     * @param $perPage
+     * @param array $with
+     * @param array $columns
+     * @return LengthAwarePaginator
+     */
+    public function wherePaginate($where, $condition, $perPage, $columns = ['*'])
+    {
+        return $this->model
+            ->where($where, $condition)
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage, $columns);
+    }
+
+    /**
      * Build a query for retrieving all records.
      *
      * @param array $search

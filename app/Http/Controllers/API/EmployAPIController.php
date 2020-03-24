@@ -58,7 +58,7 @@ class EmployAPIController extends AppBaseController
         $request->merge(['cv' => 'null']);
         $input = $request->all();
         $employ = $this->employRepository->createApi($input);
-        $user = User::find(auth('api')->user()->id);
+        $user = User::where('id', auth('api')->user()->id)->first();
         $user->status = 2;
         $user->save();
         return $this->sendResponse($employ->toArray(), 'Employ saved successfully');

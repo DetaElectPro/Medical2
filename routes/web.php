@@ -39,3 +39,7 @@ Route::resource('wallets', 'WalletController');
 Route::resource('profile', 'UserInfoController');
 
 Route::resource('emergencyServiceds', 'EmergencyServicedController');
+
+Route::resource('ambulances', 'AmbulanceController');
+
+Route::resource('pharmacies', 'PharmacyController');

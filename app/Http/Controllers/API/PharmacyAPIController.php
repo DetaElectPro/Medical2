@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\API\CreateEmergencyServicedAPIRequest;
-use App\Http\Requests\API\UpdateEmergencyServicedAPIRequest;
-use App\Models\EmergencyServiced;
-use App\Repositories\EmergencyServicedRepository;
+use App\Http\Requests\API\CreatePharmacyAPIRequest;
+use App\Http\Requests\API\UpdatePharmacyAPIRequest;
+use App\Models\Pharmacy;
+use App\Repositories\PharmacyRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Response;
 
 /**
- * Class EmergencyServicedController
+ * Class PharmacyController
  * @package App\Http\Controllers\API
  */
-class EmergencyServicedAPIController extends AppBaseController
-{
-    /** @var  EmergencyServicedRepository */
-    private $emergencyServicedRepository;
 
-    public function __construct(EmergencyServicedRepository $emergencyServicedRepo)
+class PharmacyAPIController extends AppBaseController
+{
+    /** @var  PharmacyRepository */
+    private $pharmacyRepository;
+
+    public function __construct(PharmacyRepository $pharmacyRepo)
     {
-        $this->emergencyServicedRepository = $emergencyServicedRepo;
+        $this->pharmacyRepository = $pharmacyRepo;
     }
 
     /**
@@ -29,10 +30,10 @@ class EmergencyServicedAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/emergencyServiceds",
-     *      summary="Get a listing of the EmergencyServiceds.",
-     *      tags={"EmergencyServiced"},
-     *      description="Get all EmergencyServiceds",
+     *      path="/pharmacies",
+     *      summary="Get a listing of the Pharmacies.",
+     *      tags={"Pharmacy"},
+     *      description="Get all Pharmacies",
      *      produces={"application/json"},
      *      @SWG\Response(
      *          response=200,
@@ -46,7 +47,7 @@ class EmergencyServicedAPIController extends AppBaseController
      *              @SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/EmergencyServiced")
+     *                  @SWG\Items(ref="#/definitions/Pharmacy")
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -58,26 +59,31 @@ class EmergencyServicedAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $emergencyServiceds = $this->emergencyServicedRepository->withPaginate(10, 'user');
-        return $this->sendResponse($emergencyServiceds->toArray(), 'Emergency Serviceds retrieved successfully');
+        $pharmacies = $this->pharmacyRepository->all(
+            $request->except(['skip', 'limit']),
+            $request->get('skip'),
+            $request->get('limit')
+        );
+
+        return $this->sendResponse($pharmacies->toArray(), 'Pharmacies retrieved successfully');
     }
 
     /**
-     * @param CreateEmergencyServicedAPIRequest $request
+     * @param CreatePharmacyAPIRequest $request
      * @return Response
      *
      * @SWG\Post(
-     *      path="/emergencyServiceds",
-     *      summary="Store a newly created EmergencyServiced in storage",
-     *      tags={"EmergencyServiced"},
-     *      description="Store EmergencyServiced",
+     *      path="/pharmacies",
+     *      summary="Store a newly created Pharmacy in storage",
+     *      tags={"Pharmacy"},
+     *      description="Store Pharmacy",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="EmergencyServiced that should be stored",
+     *          description="Pharmacy that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/EmergencyServiced")
+     *          @SWG\Schema(ref="#/definitions/Pharmacy")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -90,7 +96,7 @@ class EmergencyServicedAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/EmergencyServiced"
+     *                  ref="#/definitions/Pharmacy"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -100,13 +106,13 @@ class EmergencyServicedAPIController extends AppBaseController
      *      )
      * )
      */
-    public function store(CreateEmergencyServicedAPIRequest $request)
+    public function store(CreatePharmacyAPIRequest $request)
     {
         $input = $request->all();
 
-        $emergencyServiced = $this->emergencyServicedRepository->createApi($input);
+        $pharmacy = $this->pharmacyRepository->create($input);
 
-        return $this->sendResponse($emergencyServiced->toArray(), 'Emergency Serviced saved successfully');
+        return $this->sendResponse($pharmacy->toArray(), 'Pharmacy saved successfully');
     }
 
     /**
@@ -114,14 +120,14 @@ class EmergencyServicedAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/emergencyServiceds/{id}",
-     *      summary="Display the specified EmergencyServiced",
-     *      tags={"EmergencyServiced"},
-     *      description="Get EmergencyServiced",
+     *      path="/pharmacies/{id}",
+     *      summary="Display the specified Pharmacy",
+     *      tags={"Pharmacy"},
+     *      description="Get Pharmacy",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of EmergencyServiced",
+     *          description="id of Pharmacy",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -137,7 +143,7 @@ class EmergencyServicedAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/EmergencyServiced"
+     *                  ref="#/definitions/Pharmacy"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -149,30 +155,30 @@ class EmergencyServicedAPIController extends AppBaseController
      */
     public function show($id)
     {
-        /** @var EmergencyServiced $emergencyServiced */
-        $emergencyServiced = $this->emergencyServicedRepository->find($id);
+        /** @var Pharmacy $pharmacy */
+        $pharmacy = $this->pharmacyRepository->find($id);
 
-        if (empty($emergencyServiced)) {
-            return $this->sendError('Emergency Serviced not found');
+        if (empty($pharmacy)) {
+            return $this->sendError('Pharmacy not found');
         }
 
-        return $this->sendResponse($emergencyServiced->toArray(), 'Emergency Serviced retrieved successfully');
+        return $this->sendResponse($pharmacy->toArray(), 'Pharmacy retrieved successfully');
     }
 
     /**
      * @param int $id
-     * @param UpdateEmergencyServicedAPIRequest $request
+     * @param UpdatePharmacyAPIRequest $request
      * @return Response
      *
      * @SWG\Put(
-     *      path="/emergencyServiceds/{id}",
-     *      summary="Update the specified EmergencyServiced in storage",
-     *      tags={"EmergencyServiced"},
-     *      description="Update EmergencyServiced",
+     *      path="/pharmacies/{id}",
+     *      summary="Update the specified Pharmacy in storage",
+     *      tags={"Pharmacy"},
+     *      description="Update Pharmacy",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of EmergencyServiced",
+     *          description="id of Pharmacy",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -180,9 +186,9 @@ class EmergencyServicedAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="EmergencyServiced that should be updated",
+     *          description="Pharmacy that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/EmergencyServiced")
+     *          @SWG\Schema(ref="#/definitions/Pharmacy")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -195,7 +201,7 @@ class EmergencyServicedAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/EmergencyServiced"
+     *                  ref="#/definitions/Pharmacy"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -205,20 +211,20 @@ class EmergencyServicedAPIController extends AppBaseController
      *      )
      * )
      */
-    public function update($id, UpdateEmergencyServicedAPIRequest $request)
+    public function update($id, UpdatePharmacyAPIRequest $request)
     {
         $input = $request->all();
 
-        /** @var EmergencyServiced $emergencyServiced */
-        $emergencyServiced = $this->emergencyServicedRepository->find($id);
+        /** @var Pharmacy $pharmacy */
+        $pharmacy = $this->pharmacyRepository->find($id);
 
-        if (empty($emergencyServiced)) {
-            return $this->sendError('Emergency Serviced not found');
+        if (empty($pharmacy)) {
+            return $this->sendError('Pharmacy not found');
         }
 
-        $emergencyServiced = $this->emergencyServicedRepository->update($input, $id);
+        $pharmacy = $this->pharmacyRepository->update($input, $id);
 
-        return $this->sendResponse($emergencyServiced->toArray(), 'EmergencyServiced updated successfully');
+        return $this->sendResponse($pharmacy->toArray(), 'Pharmacy updated successfully');
     }
 
     /**
@@ -226,14 +232,14 @@ class EmergencyServicedAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Delete(
-     *      path="/emergencyServiceds/{id}",
-     *      summary="Remove the specified EmergencyServiced from storage",
-     *      tags={"EmergencyServiced"},
-     *      description="Delete EmergencyServiced",
+     *      path="/pharmacies/{id}",
+     *      summary="Remove the specified Pharmacy from storage",
+     *      tags={"Pharmacy"},
+     *      description="Delete Pharmacy",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of EmergencyServiced",
+     *          description="id of Pharmacy",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -261,28 +267,15 @@ class EmergencyServicedAPIController extends AppBaseController
      */
     public function destroy($id)
     {
-        /** @var EmergencyServiced $emergencyServiced */
-        $emergencyServiced = $this->emergencyServicedRepository->find($id);
+        /** @var Pharmacy $pharmacy */
+        $pharmacy = $this->pharmacyRepository->find($id);
 
-        if (empty($emergencyServiced)) {
-            return $this->sendError('Emergency Serviced not found');
+        if (empty($pharmacy)) {
+            return $this->sendError('Pharmacy not found');
         }
 
-        $emergencyServiced->delete();
+        $pharmacy->delete();
 
-        return $this->sendSuccess('Emergency Serviced deleted successfully');
+        return $this->sendSuccess('Pharmacy deleted successfully');
     }
-
-    public function adminHistory()
-    {
-        /** @var EmergencyServiced $emergencyServiced */
-        $emergencyServiced = $this->emergencyServicedRepository->withPaginate(10, 'user');
-
-        if (empty($emergencyServiced)) {
-            return $this->sendError('Emergency Serviced not found');
-        }
-
-        return $this->sendResponse($emergencyServiced->toArray(), 'Emergency Serviced retrieved successfully');
-    }
-
 }

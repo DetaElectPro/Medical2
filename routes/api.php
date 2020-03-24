@@ -20,6 +20,7 @@ Route::prefix('auth')->group(function () {
     Route::post('logout', 'AuthControllerApi@logout');
     Route::resource('profile', 'ProfileApiController');
     Route::put('/fcm', 'ProfileApiController@updateFCM')->name('user.update');
+    Route::get('/check_user', 'ProfileApiController@checkUser')->name('user.check');
 });
 
 
@@ -47,3 +48,9 @@ Route::post('acceptRequestAndDone/{id}', 'AcceptRequestSpecialistsAPIController@
 
 Route::resource('emergency_serviced', 'EmergencyServicedAPIController');
 Route::get('emergency_serviced_admin_history', 'EmergencyServicedAPIController@adminHistory');
+
+Route::resource('ambulances', 'AmbulanceAPIController');
+
+
+
+Route::resource('pharmacies', 'PharmacyAPIController');

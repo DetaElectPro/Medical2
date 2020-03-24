@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employ;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -76,8 +77,10 @@ class UserInfoController extends Controller
         $employ = Employ::findOrFail($id);
         $employ->fill($request->all());
         $employ->cv = $cvFile;
+        $employ->doctor()->update(['status' => 3]);
         $employ->save();
-        return view('web.employ.index');
+        return $employ->doctor;
+//        return view('web.employ.index');
     }
 
     /**

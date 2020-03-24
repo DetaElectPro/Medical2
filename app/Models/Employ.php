@@ -23,9 +23,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer user_id
  * @property integer medical_fields_id
  * @property int $id
- * @property \Illuminate\Support\Carbon $graduation_date
- * @property \Illuminate\Support\Carbon $birth_of_date
- * @property string $medical_registration_number
  * @property \Illuminate\Support\Carbon $registration_date
  * @property string $address
  * @property int $years_of_experience
@@ -119,7 +116,7 @@ class Employ extends Model
      **/
     public function doctor()
     {
-        return $this->belongsTo(User::class, 'doctor_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**

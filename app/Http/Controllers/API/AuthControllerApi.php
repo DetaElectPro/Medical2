@@ -58,35 +58,34 @@ class AuthControllerApi extends Controller
         return response()->json([
             'success' => false,
             'error' => false,
-            'message'=> "not your app"]);
+            'message' => "not your app"]);
     }
 
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function logout(Request $request)
     {
-
-//        try {
-        JWTAuth::invalidate($request->token);
-        JWTAuth::invalidate();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'User logged out successfully'
+        $this->validate($request, [
+            'token' => 'required'
         ]);
-//        } catch (JWTException $exception) {
-//            dd($exception);
-//            return response()->json([
-//                'success' => false,
-//                'exception' => $exception->getFile(),
-//                'exception1' => $exception->getLine(),
-//                'exception2' => $exception->getMessage(),
-//                'message' => 'Sorry, the user cannot be logged out'
-//            ], 500);
-//        }
+
+        try {
+            JWTAuth::invalidate($request->token);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User logged out successfully'
+            ]);
+        } catch (JWTException $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, the user cannot be logged out'
+            ], 500);
+        }
     }
 
     /**
@@ -132,8 +131,7 @@ class AuthControllerApi extends Controller
     /**
      * @return JsonResponse
      */
-    public
-    function checkAuth()
+    public function checkAuth()
     {
         try {
             $token = JWTAuth::parseToken()->authenticate();

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateEmergencyServicedsTable extends Migration
+class CreateAmbulancesTable extends Migration
 {
 
     /**
@@ -13,14 +13,12 @@ class CreateEmergencyServicedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('emergency_serviceds', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
+        Schema::create('ambulances', function (Blueprint $table) {
+            $table->bigincrements('id');
+            $table->string('title');
             $table->string('address');
-            $table->string('contact')->nullable();
-            $table->double('price_per_day');
-            $table->string('type');
-            $table->integer('available');
+            $table->string('longitude');
+            $table->string('latitude');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->softDeletes();
@@ -35,6 +33,6 @@ class CreateEmergencyServicedsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('emergency_serviceds');
+        Schema::drop('ambulances');
     }
 }

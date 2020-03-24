@@ -26,3 +26,11 @@
     <a href="{{ route('emergencyServiceds.index') }}"><i class="fa fa-edit"></i><span>Emergency Serviceds</span></a>
 </li>
 
+<li class="{{ Request::is('ambulances*') ? 'active' : '' }}">
+    <a href="{{ route('ambulances.index') }}"><i class="fa fa-edit"></i><span>Ambulances</span></a>
+</li>
+
+<li class="{{ Request::is('pharmacies*') ? 'active' : '' }}">
+    <a href="{{ route('pharmacies.index') }}"><i class="fa fa-edit"></i><span>Pharmacies</span></a>
+</li>
+

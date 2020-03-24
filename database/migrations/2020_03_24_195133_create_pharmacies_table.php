@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateEmergencyServicedsTable extends Migration
+class CreatePharmaciesTable extends Migration
 {
 
     /**
@@ -13,18 +13,19 @@ class CreateEmergencyServicedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('emergency_serviceds', function (Blueprint $table) {
+        Schema::create('pharmacies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('address');
-            $table->string('contact')->nullable();
-            $table->double('price_per_day');
+            $table->integer('dose');
+            $table->boolean('company')->default(true);
             $table->string('type');
-            $table->integer('available');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('pharmacy_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('pharmacy_id')->references('id')->on('users');
         });
     }
 
@@ -35,6 +36,6 @@ class CreateEmergencyServicedsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('emergency_serviceds');
+        Schema::drop('pharmacies');
     }
 }

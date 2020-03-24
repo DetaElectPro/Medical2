@@ -51,6 +51,7 @@
         <h1 class="mt-5">Profile</h1>
         <p class="lead">Hello, Profile completed successfully.
             You can go back and start using the application.</p>
+{{--        <p>CC: {{$employ}}</p>--}}
     </div>
 </main>
 
