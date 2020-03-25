@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\FcmHelper;
+use App\User;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -106,8 +107,8 @@ class RequestSpecialists extends Model
     public function newRequestProcess($medical_id)
     {
         $user = auth('api')->user();
-        $employ = Employ::where('medical_field_id', $medical_id)->first()
-            ->whith('doctor')->get('fcm_registration_id');
+//        $employ = Employ::where('medical_field_id', $medical_id)->first()
+//            ->whith('doctor')->get('fcm_registration_id');
 
         if ($user) {
             $wallet = Wallet::where('user_id', $user->id)->first();
@@ -115,7 +116,7 @@ class RequestSpecialists extends Model
             $wallet->save();
 
             $fcm = new FcmHelper();
-            $fcm->send_android_fcm_all($employ, 'New Request', "Doctor required");
+//            $fcm->send_android_fcm_all($employ, 'New Request', "Doctor required");
         }
         return false;
     }
@@ -151,6 +152,20 @@ class RequestSpecialists extends Model
     public function acceptRequest()
     {
         return $this->hasOne(AcceptRequestSpecialists::class, 'request_id', 'id');
+    }
+
+    public function users_notfication($medical_id)
+    {
+        $medical = MedicalSpecialty::where('id', $medical_id)->first('name');
+        $message = 'New Request';
+        $title = "$medical->name required";
+        $fcm_registration_id = array();
+        $fcm_registration = User::all('fcm_registration_id');
+        foreach ($fcm_registration as $device) {
+            $fcm_registration_id[] = $device->fcm_registration_id;
+        }
+        $result = new FcmHelper();
+        return $result->send_android_fcm_all($fcm_registration_id, $title, $message);
     }
 
 }
