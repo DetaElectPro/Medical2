@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateRequestSpecialistsAPIRequest;
 use App\Http\Requests\API\UpdateRequestSpecialistsAPIRequest;
 use App\Models\RequestSpecialists;
+use App\Models\Wallet;
 use App\Repositories\RequestSpecialistsRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -48,6 +49,8 @@ class RequestSpecialistsAPIController extends AppBaseController
     public function store(Request $request)
     {
         $input = $request->all();
+        $requestSpecialistsModle = new  RequestSpecialists();
+        $requestSpecialistsModle->newRequestProcess($input->medical_id);
 
         $requestSpecialists = $this->requestSpecialistsRepository->createApi($input);
 
