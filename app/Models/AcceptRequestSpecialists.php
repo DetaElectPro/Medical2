@@ -168,6 +168,8 @@ class AcceptRequestSpecialists extends Model
             ->whereStatus(2)
             ->update(['status' => 3]);
         if ($result == 1) {
+            $wallet = Wallet::where('user_id', $resultData->user->id)->first();
+            $wallet->balance = $wallet->balance - env('REQUEST_POINT');
             $this->fcm_send($resultData->user->fcm_registration_id, "new message 2", "The admin:" . $resultData->user->name . " approved your request. ");
             return ['accept' => true, 'request' => true];
         } else {
