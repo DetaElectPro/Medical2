@@ -208,12 +208,15 @@ abstract class BaseRepository
      */
     public function createApi($input)
     {
-        $user = auth('api')->user()->id;
-        $model = $this->model->newInstance($input);
-        $model->user_id = $user;
-        $model->save();
+        $user = auth('api')->user();
+        if ($user) {
+            $model = $this->model->newInstance($input);
+            $model->user_id = $user->id;
+            $model->save();
 
-        return $model;
+            return $model;
+        }
+        return $user;
     }
 
 
