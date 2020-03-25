@@ -32,7 +32,7 @@ Route::resource('employs', 'EmployAPIController');
 
 Route::resource('accept_request_specialists', 'AcceptRequestSpecialistsAPIController');
 Route::resource('wallets', 'WalletAPIController');
-Route::resource('my_wallets', 'WalletAPIController@myBalancy');
+//Route::resource('my_wallets', 'WalletAPIController');
 
 Route::resource('request_specialists', 'RequestSpecialistsAPIController');
 Route::get('request_specialists_admin_history', 'RequestSpecialistsAPIController@adminHistory');
