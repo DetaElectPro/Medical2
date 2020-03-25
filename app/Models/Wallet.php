@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -39,10 +40,9 @@ class Wallet extends Model
     use SoftDeletes;
 
     public $table = 'wallets';
-    
+
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -56,7 +56,7 @@ class Wallet extends Model
      * @var array
      */
     protected $casts = [
-        'balance' => 'string',
+        'balance' => 'integer',
         'user_id' => 'integer'
     ];
 
@@ -69,11 +69,21 @@ class Wallet extends Model
         'balance' => 'required|max:5|min:1'
     ];
 
+    public function createWallet()
+    {
+        $user = auth('api')->user()->id;
+        $wallet = new Wallet();
+        $wallet->balance = env('BALANCE');
+        $wallet->user_id = $user;
+        $wallet->save();
+        return $wallet;
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
     public function employ()
     {
-        return $this->belongsTo(\App\Models\users::class, 'employ_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

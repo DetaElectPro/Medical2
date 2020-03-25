@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateEmployAPIRequest;
 use App\Http\Requests\API\UpdateEmployAPIRequest;
 use App\Models\Employ;
+use App\Models\Wallet;
 use App\Repositories\EmployRepository;
 use App\User;
 use Illuminate\Http\Request;
@@ -59,8 +60,10 @@ class EmployAPIController extends AppBaseController
         $input = $request->all();
         $employ = $this->employRepository->createApi($input);
         $user = User::where('id', auth('api')->user()->id)->first();
-        $user->status = 2;
+        $user->status = env('STATUS_MEDICAL');
         $user->save();
+        $wallet = new Wallet();
+        $wallet->createWallet();
         return $this->sendResponse($employ->toArray(), 'Employ saved successfully');
     }
 

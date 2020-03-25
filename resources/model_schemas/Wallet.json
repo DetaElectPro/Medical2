@@ -61,6 +61,6 @@
   },
   {
     "type": "relation",
-    "relation": "mt1,users,employ_id,id"
+    "relation": "mt1,users,user_id,id"
   }
 ]

@@ -77,7 +77,7 @@ class UserInfoController extends Controller
         $employ = Employ::findOrFail($id);
         $employ->fill($request->all());
         $employ->cv = $cvFile;
-        $employ->doctor()->update(['status' => 3]);
+        $employ->doctor()->update(['status' => env('STATUS_CV')]);
         $employ->save();
         return view('web.employ.index');
     }

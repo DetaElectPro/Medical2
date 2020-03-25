@@ -5,6 +5,7 @@ namespace App;
 use App\Models\AcceptRequestSpecialists;
 use App\Models\EmergencyServiced;
 use App\Models\Employ;
+use App\Models\Wallet;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -112,6 +113,14 @@ class User extends Authenticatable implements JWTSubject
         if (!empty($password)) {
             $this->attributes['password'] = bcrypt($password);
         }
+    }
+
+    public function createWallet()
+    {
+        $user = auth('api')->user()->id;
+        $wallet = new Wallet();
+        $wallet->balance = env('BALANCE');
+        $wallet->user_id = $user;
     }
 
     public function employ()

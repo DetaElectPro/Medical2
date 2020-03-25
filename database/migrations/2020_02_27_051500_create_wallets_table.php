@@ -15,7 +15,7 @@ class CreateWalletsTable extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('balance');
+            $table->integer('balance')->default(0);
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
