@@ -14,7 +14,6 @@ use Response;
  * Class WalletController
  * @package App\Http\Controllers\API
  */
-
 class WalletAPIController extends AppBaseController
 {
     /** @var  WalletRepository */
@@ -57,15 +56,14 @@ class WalletAPIController extends AppBaseController
      *      )
      * )
      */
-    public function index(Request $request)
+    public function index()
     {
-        $wallets = $this->walletRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
-
-        return $this->sendResponse($wallets->toArray(), 'Wallets retrieved successfully');
+        $user = auth('api')->user();
+        if ($user) {
+            $wallets = Wallet::where('user_id', $user->id)->first();
+            return $this->sendResponse($wallets->toArray(), 'Wallets retrieved successfully');
+        }
+        return false;
     }
 
     /**
@@ -314,6 +312,6 @@ class WalletAPIController extends AppBaseController
 
     public function myBalancy()
     {
-        
+
     }
 }
