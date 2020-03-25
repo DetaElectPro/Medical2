@@ -50,7 +50,7 @@ class RequestSpecialistsAPIController extends AppBaseController
     {
         $input = $request->all();
         $requestSpecialistsModle = new  RequestSpecialists();
-        $requestSpecialistsModle->newRequestProcess($input->medical_id);
+        $requestSpecialistsModle->newRequestProcess($request->medical_id);
 
         $requestSpecialists = $this->requestSpecialistsRepository->createApi($input);
 
