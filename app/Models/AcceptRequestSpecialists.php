@@ -206,6 +206,7 @@ class AcceptRequestSpecialists extends Model
      * @param $requestId
      * @return array
      * @throws Exception
+     * @throws \Exception
      */
     public function cancelRequestByUser($requestId)
     {
