@@ -148,7 +148,7 @@ class AmbulanceAPIController extends AppBaseController
     public function show($id)
     {
         /** @var Ambulance $ambulance */
-        $ambulance = $this->ambulanceRepository->find($id);
+        $ambulance = $this->ambulanceRepository->findWith($id, ['user']);
 
         if (empty($ambulance)) {
             return $this->sendError('Ambulance not found');
