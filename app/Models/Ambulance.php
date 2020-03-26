@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -54,10 +55,9 @@ class Ambulance extends Model
     use SoftDeletes;
 
     public $table = 'ambulances';
-    
+
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -97,6 +97,6 @@ class Ambulance extends Model
      **/
     public function user()
     {
-        return $this->belongsTo(\App\Models\users::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
