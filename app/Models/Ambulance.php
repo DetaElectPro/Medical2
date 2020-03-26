@@ -35,6 +35,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          description="user_id",
  *          type="integer",
  *          format="int32"
+ *      ),  @SWG\Property(
+ *          property="status",
+ *          description="status",
+ *          type="integer",
+ *          format="int32"
  *      ),
  *      @SWG\Property(
  *          property="created_at",
@@ -65,7 +70,7 @@ class Ambulance extends Model
         'address',
         'longitude',
         'latitude',
-        'user_id'
+        'status'
     ];
 
     /**
@@ -78,6 +83,7 @@ class Ambulance extends Model
         'address' => 'string',
         'longitude' => 'string',
         'latitude' => 'string',
+        'status' => 'integer',
         'user_id' => 'integer'
     ];
 

@@ -19,6 +19,7 @@ class CreateAmbulancesTable extends Migration
             $table->string('address');
             $table->string('longitude');
             $table->string('latitude');
+            $table->integer('status');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->softDeletes();
