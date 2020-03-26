@@ -55,9 +55,7 @@ class AmbulanceAPIController extends AppBaseController
      */
     public function index()
     {
-        $ambulances = $this->ambulanceRepository->withPaginate(10, 'user');
-
-        return $this->sendResponse($ambulances->toArray(), 'Ambulances retrieved successfully');
+        return $ambulances = $this->ambulanceRepository->withPaginate(10, 'user');
     }
 
     /**
