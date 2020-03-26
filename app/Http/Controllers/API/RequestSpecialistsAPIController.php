@@ -135,9 +135,7 @@ class RequestSpecialistsAPIController extends AppBaseController
     public function doctorHistory()
     {
         $user = auth('api')->user();
-        return $request = RequestSpecialists::where('doctor_id', $user->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        return $this->requestSpecialistsRepository->wherePaginate('doctor_id', $user->id, 10);
     }
 
     public function search($search)
