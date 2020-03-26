@@ -127,7 +127,7 @@ class RequestSpecialists extends Model
 
     public function user()
     {
-        return $this->belongsTo(\App\User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**
@@ -135,7 +135,7 @@ class RequestSpecialists extends Model
      **/
     public function doctor()
     {
-        return $this->belongsTo(\App\User::class, 'doctor_id', 'id');
+        return $this->belongsTo(User::class, 'doctor_id', 'id');
     }
 
     /**

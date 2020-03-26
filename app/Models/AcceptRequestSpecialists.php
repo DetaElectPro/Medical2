@@ -145,11 +145,9 @@ class AcceptRequestSpecialists extends Model
             $requestSpecialistData->status = 2;
             $requestSpecialistData->doctor_id = $doctor_id;
             $requestSpecialistData = $requestSpecialistData->save();
-            $this->fcm_send($requestSpecialistData
-                ->user
-                ->fcm_registration_id,
+            $this->fcm_send($requestSpecialistData->doctor->fcm_registration_id,
                 "new message 1",
-                "Your Request has accept By a Doctor: " . $requestSpecialistData->user->name);
+                "Your Request has accept By a Doctor: " . $requestSpecialistData->doctor->name);
             return ['accept' => true, 'request' => true, 'acceptRequest' => $requestSpecialistData];
         } else {
             return ['accept' => false, 'request' => false];
