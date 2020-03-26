@@ -232,7 +232,7 @@ class AcceptRequestSpecialists extends Model
             ]);
         if ($acceptRequest) {
             $requestSpecialist = RequestSpecialists::whereId($requestId)->whereStatus(3)->update(['status' => 6]);
-            return ['accept' => true, 'request' => true];
+            return ['accept' => true, 'request' => true, 'data' => $requestSpecialist];
 
         } else {
             return ['accept' => false, 'request' => false];
