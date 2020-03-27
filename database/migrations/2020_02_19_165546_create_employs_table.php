@@ -27,7 +27,7 @@ class CreateEmploysTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('medical_field_id')->references('id')->on('medical_fields');
+            $table->foreign('medical_specialty_id')->references('id')->on('medical_specialties');
         });
     }
 

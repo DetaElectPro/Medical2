@@ -14,7 +14,6 @@ use Response;
  * Class PharmacyController
  * @package App\Http\Controllers\API
  */
-
 class PharmacyAPIController extends AppBaseController
 {
     /** @var  PharmacyRepository */
@@ -27,7 +26,7 @@ class PharmacyAPIController extends AppBaseController
 
     /**
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      *
      * @SWG\Get(
      *      path="/pharmacies",
@@ -59,13 +58,7 @@ class PharmacyAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $pharmacies = $this->pharmacyRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
-
-        return $this->sendResponse($pharmacies->toArray(), 'Pharmacies retrieved successfully');
+        return $this->pharmacyRepository->withPaginate(10, ['user']);
     }
 
     /**
@@ -110,7 +103,7 @@ class PharmacyAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $pharmacy = $this->pharmacyRepository->create($input);
+        $pharmacy = $this->pharmacyRepository->createApi($input);
 
         return $this->sendResponse($pharmacy->toArray(), 'Pharmacy saved successfully');
     }

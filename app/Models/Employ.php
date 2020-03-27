@@ -118,6 +118,6 @@ class Employ extends Model
      **/
     public function medicalField()
     {
-        return $this->belongsTo(\App\Models\MedicalField::class, 'medical_field_id', 'id');
+        return $this->belongsTo(MedicalSpecialty::class, 'medical_specialty_id', 'id');
     }
 }
