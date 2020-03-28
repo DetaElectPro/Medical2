@@ -285,4 +285,19 @@ class EmergencyServicedAPIController extends AppBaseController
         return $this->sendResponse($emergencyServiced->toArray(), 'Emergency Serviced retrieved successfully');
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userHistory()
+    {
+        /** @var EmergencyServiced $emergencyServiced */
+        $emergencyServiced = $this->emergencyServicedRepository->withPaginate(10, 'user');
+
+        if (empty($emergencyServiced)) {
+            return $this->sendError('Emergency Serviced not found');
+        }
+
+        return $this->sendResponse($emergencyServiced->toArray(), 'Emergency Serviced retrieved successfully');
+    }
+
 }

@@ -48,6 +48,7 @@ Route::post('acceptRequestAndDone/{id}', 'AcceptRequestSpecialistsAPIController@
 
 Route::resource('emergency_serviced', 'EmergencyServicedAPIController');
 Route::get('emergency_serviced_admin_history', 'EmergencyServicedAPIController@adminHistory');
+Route::get('emergency_serviced_user_history', 'EmergencyServicedAPIController@userHistory');
 
 Route::resource('ambulances', 'AmbulanceAPIController');
 
