@@ -63,6 +63,9 @@ class MedicalField extends Model
         'name' => 'required min:3'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function medical()
     {
         return $this->hasMany(MedicalSpecialty::class, 'medical_id');

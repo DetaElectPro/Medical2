@@ -70,7 +70,7 @@ class MedicalSpecialty extends Model
 
     public function medical()
     {
-        return $this->belongsTo(MedicalField::class, 'medical_specialty_id');
+        return $this->belongsTo(MedicalField::class, 'medical_id');
     }
 
 
