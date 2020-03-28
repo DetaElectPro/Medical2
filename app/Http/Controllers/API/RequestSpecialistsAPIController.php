@@ -144,7 +144,7 @@ class RequestSpecialistsAPIController extends AppBaseController
      */
     public function search($search)
     {
-        return RequestSpecialists::where('status', '=',1)
+        return RequestSpecialists::where('status', '<=',1)
         ->where('name', 'LIKE', '%' . $search . '%')
             ->orWhere('address', 'LIKE', '%' . $search . '%')
             ->orWhereHas('specialties', function ($query) use ($search) {
