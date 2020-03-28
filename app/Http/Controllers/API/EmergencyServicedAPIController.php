@@ -150,7 +150,7 @@ class EmergencyServicedAPIController extends AppBaseController
     public function show($id)
     {
         /** @var EmergencyServiced $emergencyServiced */
-        $emergencyServiced = $this->emergencyServicedRepository->find($id);
+        $emergencyServiced = $this->emergencyServicedRepository->findWith($id, ['user']);
 
         if (empty($emergencyServiced)) {
             return $this->sendError('Emergency Serviced not found');
