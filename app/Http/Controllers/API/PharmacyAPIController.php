@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreatePharmacyAPIRequest;
 use App\Http\Requests\API\UpdatePharmacyAPIRequest;
 use App\Models\Pharmacy;
+use App\Models\Wallet;
 use App\Repositories\PharmacyRepository;
-use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Response;
 
@@ -25,7 +25,6 @@ class PharmacyAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      *
      * @SWG\Get(
@@ -56,14 +55,14 @@ class PharmacyAPIController extends AppBaseController
      *      )
      * )
      */
-    public function index(Request $request)
+    public function index()
     {
         return $this->pharmacyRepository->withPaginate(10, ['user']);
     }
 
     /**
      * @param CreatePharmacyAPIRequest $request
-     * @return Response
+     * @return bool
      *
      * @SWG\Post(
      *      path="/pharmacies",
@@ -101,11 +100,17 @@ class PharmacyAPIController extends AppBaseController
      */
     public function store(CreatePharmacyAPIRequest $request)
     {
-        $input = $request->all();
+        $user = auth('aut')->user();
+        if ($user) {
+            $input = $request->all();
+            $wallet = Wallet::whereUserId($user->id);
+            $wallet->balance = ($wallet->balance - env('AMBULANCE_POINT'));
+            $wallet->save();
+            $pharmacy = $this->pharmacyRepository->createApi($input);
 
-        $pharmacy = $this->pharmacyRepository->createApi($input);
-
-        return $this->sendResponse($pharmacy->toArray(), 'Pharmacy saved successfully');
+            return $this->sendResponse($pharmacy->toArray(), 'Pharmacy saved successfully');
+        }
+        return false;
     }
 
     /**
@@ -224,6 +229,7 @@ class PharmacyAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
+     * @throws \Exception
      * @SWG\Delete(
      *      path="/pharmacies/{id}",
      *      summary="Remove the specified Pharmacy from storage",

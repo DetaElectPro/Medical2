@@ -138,9 +138,14 @@ class RequestSpecialistsAPIController extends AppBaseController
         return $this->requestSpecialistsRepository->wherePaginate('doctor_id', $user->id, 10);
     }
 
+    /**
+     * @param $search
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function search($search)
     {
-        return RequestSpecialists::where('name', 'LIKE', '%' . $search . '%')
+        return RequestSpecialists::whereStatus(1)
+            ->where('name', 'LIKE', '%' . $search . '%')
             ->orWhere('address', 'LIKE', '%' . $search . '%')
             ->orWhereHas('specialties', function ($query) use ($search) {
                 return $query->where('name', 'LIKE', "%$search%");
