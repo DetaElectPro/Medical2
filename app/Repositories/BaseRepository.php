@@ -198,6 +198,10 @@ abstract class BaseRepository
         $user = auth('api')->user()->id;
         return $this->model->where('user_id', $user)->with($relations)->orderBy('created_at', 'desc')->get();
     }
+    public function whereWith($where, $condition, $relations)
+    {
+        return $this->model->where($where, $condition)->with($relations)->orderBy('created_at', 'desc')->get();
+    }
 
     /**
      * Create model record

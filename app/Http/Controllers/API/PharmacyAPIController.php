@@ -59,7 +59,7 @@ class PharmacyAPIController extends AppBaseController
      */
     public function index()
     {
-        return $this->pharmacyRepository->withPaginate(10, ['user']);
+        return $this->pharmacyRepository->withPaginate(10, ['user', 'pharmacy']);
     }
 
     /**
@@ -157,6 +157,32 @@ class PharmacyAPIController extends AppBaseController
     {
         /** @var Pharmacy $pharmacy */
         $pharmacy = $this->pharmacyRepository->find($id);
+
+        if (empty($pharmacy)) {
+            return $this->sendError('Pharmacy not found');
+        }
+
+        return $this->sendResponse($pharmacy->toArray(), 'Pharmacy retrieved successfully');
+    }
+
+    public function showByUser()
+    {
+        /** @var Pharmacy $pharmacy */
+        $pharmacy = $this->pharmacyRepository->authWith(['user', 'pharmacy']);
+
+        if (empty($pharmacy)) {
+            return $this->sendError('Pharmacy not found');
+        }
+
+        return $this->sendResponse($pharmacy->toArray(), 'Pharmacy retrieved successfully');
+    }
+
+    public function showByPharmacy()
+    {
+        $pharmacyID = auth('api')->user();
+        /** @var Pharmacy $pharmacy */
+        $pharmacy = $this->pharmacyRepository
+            ->whereWith('pharmacy', $pharmacyID->id, ['user', 'pharmacy']);
 
         if (empty($pharmacy)) {
             return $this->sendError('Pharmacy not found');
@@ -285,6 +311,7 @@ class PharmacyAPIController extends AppBaseController
 
         return $this->sendSuccess('Pharmacy deleted successfully');
     }
+
 
     private function fcm_send($fcm_registration_id)
     {
