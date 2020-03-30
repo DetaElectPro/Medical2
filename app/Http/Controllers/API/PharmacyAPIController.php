@@ -100,7 +100,7 @@ class PharmacyAPIController extends AppBaseController
      */
     public function store(CreatePharmacyAPIRequest $request)
     {
-        $user = auth('auth')->user();
+        $user = auth('api')->user();
         if ($user) {
             $input = $request->all();
             $wallet = Wallet::whereUserId($user->id);
@@ -211,6 +211,8 @@ class PharmacyAPIController extends AppBaseController
      */
     public function update($id, UpdatePharmacyAPIRequest $request)
     {
+        $user = auth('api')->user();
+        $request->merge(['pharmacy_id' => $user->id]);
         $input = $request->all();
 
         /** @var Pharmacy $pharmacy */
