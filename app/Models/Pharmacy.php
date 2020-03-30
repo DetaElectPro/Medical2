@@ -73,6 +73,8 @@ class Pharmacy extends Model
         'company',
         'type',
         'user_id',
+        'available',
+        'price',
         'pharmacy_id'
     ];
 
@@ -86,6 +88,8 @@ class Pharmacy extends Model
         'address' => 'string',
         'company' => 'boolean',
         'type' => 'string',
+        'available' => 'boolean',
+        'price' => 'double',
         'user_id' => 'integer',
         'pharmacy_id' => 'integer'
     ];

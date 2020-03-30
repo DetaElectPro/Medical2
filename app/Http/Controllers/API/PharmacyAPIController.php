@@ -100,7 +100,7 @@ class PharmacyAPIController extends AppBaseController
      */
     public function store(CreatePharmacyAPIRequest $request)
     {
-        $user = auth('aut')->user();
+        $user = auth('auth')->user();
         if ($user) {
             $input = $request->all();
             $wallet = Wallet::whereUserId($user->id);
