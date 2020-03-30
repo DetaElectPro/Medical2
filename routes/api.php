@@ -52,6 +52,4 @@ Route::get('emergency_serviced_user_history', 'EmergencyServicedAPIController@us
 
 Route::resource('ambulances', 'AmbulanceAPIController');
 
-
-
 Route::resource('pharmacies', 'PharmacyAPIController');

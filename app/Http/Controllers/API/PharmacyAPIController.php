@@ -105,7 +105,7 @@ class PharmacyAPIController extends AppBaseController
         $user = auth('api')->user();
         if ($user) {
             $input = $request->all();
-            $wallet = Wallet::whereUserId($user->id);
+            $wallet = Wallet::whereUserId($user->id)->first();
             $wallet->balance = ($wallet->balance - env('AMBULANCE_POINT'));
             $wallet->save();
             $pharmacy = $this->pharmacyRepository->createApi($input);
@@ -225,9 +225,9 @@ class PharmacyAPIController extends AppBaseController
             return $this->sendError('Pharmacy not found');
         }
         $pharmacy = $this->pharmacyRepository->update($input, $id);
-        $user = User::find($pharmacy->user->id);
+        $user = User::find($pharmacy->user->id)->first();;
         $this->fcm_send($user->fcm_registration_id);
-        $wallet = Wallet::whereUserId($pharmacyUser->id);
+        $wallet = Wallet::whereUserId($pharmacyUser->id)->first();;
         $wallet->balance = ($wallet->balance - env('AMBULANCE_POINT'));
         $wallet->save();
         return $this->sendResponse($pharmacy->toArray(), 'Pharmacy updated successfully');

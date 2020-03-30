@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateAmbulanceAPIRequest;
 use App\Http\Requests\API\UpdateAmbulanceAPIRequest;
 use App\Models\Ambulance;
+use App\Models\Wallet;
 use App\Repositories\AmbulanceRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -99,8 +100,11 @@ class AmbulanceAPIController extends AppBaseController
     public function store(CreateAmbulanceAPIRequest $request)
     {
         $input = $request->all();
-
+        $user = auth('api')->user();
         $ambulance = $this->ambulanceRepository->createApi($input);
+        $wallet = Wallet::whereUserId($user->id)->first();;
+        $wallet->balance = ($wallet->balance - env('AMBULANCE_POINT'));
+        $wallet->save();
 
         return $this->sendResponse($ambulance->toArray(), 'Ambulance saved successfully');
     }
