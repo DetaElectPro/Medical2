@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\FcmHelper;
 use App\Http\Requests\API\CreatePharmacyAPIRequest;
 use App\Http\Requests\API\UpdatePharmacyAPIRequest;
 use App\Models\Pharmacy;
 use App\Models\Wallet;
 use App\Repositories\PharmacyRepository;
 use App\Http\Controllers\AppBaseController;
+use App\User;
 use Response;
 
 /**
@@ -211,8 +213,9 @@ class PharmacyAPIController extends AppBaseController
      */
     public function update($id, UpdatePharmacyAPIRequest $request)
     {
-        $user = auth('api')->user();
-        $request->merge(['pharmacy_id' => $user->id]);
+
+        $pharmacyUser = auth('api')->user();
+        $request->merge(['pharmacy_id' => $pharmacyUser->id]);
         $input = $request->all();
 
         /** @var Pharmacy $pharmacy */
@@ -221,9 +224,12 @@ class PharmacyAPIController extends AppBaseController
         if (empty($pharmacy)) {
             return $this->sendError('Pharmacy not found');
         }
-
         $pharmacy = $this->pharmacyRepository->update($input, $id);
-
+        $user = User::find($pharmacy->user->id);
+        $this->fcm_send($user->fcm_registration_id);
+        $wallet = Wallet::whereUserId($pharmacyUser->id);
+        $wallet->balance = ($wallet->balance - env('AMBULANCE_POINT'));
+        $wallet->save();
         return $this->sendResponse($pharmacy->toArray(), 'Pharmacy updated successfully');
     }
 
@@ -278,5 +284,13 @@ class PharmacyAPIController extends AppBaseController
         $pharmacy->delete();
 
         return $this->sendSuccess('Pharmacy deleted successfully');
+    }
+
+    private function fcm_send($fcm_registration_id)
+    {
+        $title = 'new message';
+        $message = 'open Pharmacy Page';
+        $result = new FcmHelper();
+        return $result->send_android_fcm($fcm_registration_id, $title, $message);
     }
 }
