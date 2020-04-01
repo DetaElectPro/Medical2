@@ -157,7 +157,7 @@ class PharmacyAPIController extends AppBaseController
     public function show($id)
     {
         /** @var Pharmacy $pharmacy */
-        $pharmacy = $this->pharmacyRepository->find($id);
+        $pharmacy = $this->pharmacyRepository->findWith($id, ['user', 'pharmacy']);
 
         if (empty($pharmacy)) {
             return $this->sendError('Pharmacy not found');
