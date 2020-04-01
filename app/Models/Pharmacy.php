@@ -101,7 +101,6 @@ class Pharmacy extends Model
      */
     public static $rules = [
         'name' => 'required|max:191|min:1',
-        'address' => 'required|max:191|min:1',
         'dose' => 'required|max:100|min:1',
         'type' => 'required|max:100|min:1'
     ];

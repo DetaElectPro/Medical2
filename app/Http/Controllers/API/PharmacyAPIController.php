@@ -10,6 +10,7 @@ use App\Models\Wallet;
 use App\Repositories\PharmacyRepository;
 use App\Http\Controllers\AppBaseController;
 use App\User;
+use Illuminate\Http\Request;
 use Response;
 
 /**
@@ -193,7 +194,7 @@ class PharmacyAPIController extends AppBaseController
 
     /**
      * @param int $id
-     * @param UpdatePharmacyAPIRequest $request
+     * @param Request $request
      * @return Response
      *
      * @SWG\Put(
@@ -237,7 +238,7 @@ class PharmacyAPIController extends AppBaseController
      *      )
      * )
      */
-    public function update($id, UpdatePharmacyAPIRequest $request)
+    public function update($id, Request $request)
     {
 
         $pharmacyUser = auth('api')->user();
