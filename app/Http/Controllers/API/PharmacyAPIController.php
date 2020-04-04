@@ -113,7 +113,7 @@ class PharmacyAPIController extends AppBaseController
 
             return $this->sendResponse($pharmacy->toArray(), 'Pharmacy saved successfully');
         }
-        return ['success' => false, 'message' => 'user Error'];
+        return ['success' => false, 'message' => 'user Error', 'error' => $user];
     }
 
     /**
