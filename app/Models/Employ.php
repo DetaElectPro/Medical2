@@ -116,8 +116,8 @@ class Employ extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function medicalField()
+    public function specialty()
     {
-        return $this->belongsTo(MedicalSpecialty::class, 'medical_specialty_id', 'id');
+        return $this->belongsTo(MedicalSpecialty::class, 'medical_field_id', 'id');
     }
 }
