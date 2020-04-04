@@ -68,7 +68,7 @@ class RequestSpecialistsAPIController extends AppBaseController
     public function show($id)
     {
         /** @var RequestSpecialists $requestSpecialists */
-        $requestSpecialists = $this->requestSpecialistsRepository->findWith($id, ['specialties.medical', 'user', 'acceptRequest.doctor.employ']);
+        $requestSpecialists = $this->requestSpecialistsRepository->findWith($id, ['specialties.medical', 'user', 'acceptRequest.doctor.employ.medicalField']);
 
         if (empty($requestSpecialists)) {
             return $this->sendError('Request Specialists not found');
