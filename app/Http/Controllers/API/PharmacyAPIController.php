@@ -176,7 +176,7 @@ class PharmacyAPIController extends AppBaseController
             return $this->sendError('Pharmacy not found');
         }
 
-        return $this->sendResponse($pharmacy->toArray(), 'Pharmacy retrieved successfully');
+        return $pharmacy;
     }
 
     public function showByPharmacy()
@@ -190,7 +190,7 @@ class PharmacyAPIController extends AppBaseController
             return $this->sendError('Pharmacy not found');
         }
 
-        return $this->sendResponse($pharmacy->toArray(), 'Pharmacy retrieved successfully');
+        return $pharmacy;
     }
 
     /**
