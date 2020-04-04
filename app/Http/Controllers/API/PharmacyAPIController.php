@@ -168,8 +168,9 @@ class PharmacyAPIController extends AppBaseController
 
     public function showByUser()
     {
+        $user = auth('api')->user();
         /** @var Pharmacy $pharmacy */
-        $pharmacy = $this->pharmacyRepository->authWith(['user', 'pharmacy']);
+        $pharmacy = $this->pharmacyRepository->WhereWithPaginate('user_id', $user->id, 10, ['user', 'pharmacy']);
 
         if (empty($pharmacy)) {
             return $this->sendError('Pharmacy not found');
@@ -183,7 +184,7 @@ class PharmacyAPIController extends AppBaseController
         $pharmacyID = auth('api')->user();
         /** @var Pharmacy $pharmacy */
         $pharmacy = $this->pharmacyRepository
-            ->whereWith('pharmacy', $pharmacyID->id, ['user', 'pharmacy']);
+            ->WhereWithPaginate('pharmacy', $pharmacyID->id, 10, ['user', 'pharmacy']);
 
         if (empty($pharmacy)) {
             return $this->sendError('Pharmacy not found');
