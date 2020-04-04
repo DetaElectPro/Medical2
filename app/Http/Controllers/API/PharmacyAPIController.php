@@ -184,7 +184,7 @@ class PharmacyAPIController extends AppBaseController
         $pharmacyID = auth('api')->user();
         /** @var Pharmacy $pharmacy */
         $pharmacy = $this->pharmacyRepository
-            ->WhereWithPaginate('pharmacy', $pharmacyID->id, 10, ['user', 'pharmacy']);
+            ->WhereWithPaginate('pharmacy_id', $pharmacyID->id, 10, ['user', 'pharmacy']);
 
         if (empty($pharmacy)) {
             return $this->sendError('Pharmacy not found');
