@@ -65,7 +65,7 @@ class PharmacyAPIController extends AppBaseController
 
     /**
      * @param CreatePharmacyAPIRequest $request
-     * @return bool
+     * @return array
      *
      * @SWG\Post(
      *      path="/pharmacies",
@@ -113,7 +113,7 @@ class PharmacyAPIController extends AppBaseController
 
             return $this->sendResponse($pharmacy->toArray(), 'Pharmacy saved successfully');
         }
-        return false;
+        return ['success' => false, 'message' => 'user Error'];
     }
 
     /**
